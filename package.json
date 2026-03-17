@@ -1,0 +1,12 @@
+{
+  "name": "Save-the-good-girl-cocos",
+  "uuid": "dfd1798f-6d4e-4160-96f5-490abaf48696",
+  "scripts": {
+    "render:status": "node scripts/render-project-status.mjs",
+    "export:status": "node scripts/export-status-site.mjs",
+    "test:status": "node scripts/test-status-workflow.mjs"
+  },
+  "creator": {
+    "version": "3.8.8"
+  }
+}

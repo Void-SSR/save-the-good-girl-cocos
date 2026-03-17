@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "name": "拯救美少女",
+    "engine": "Cocos Creator 3.8.8",
+    "platform": "手机竖屏小游戏",
+    "sourceOfTruth": "docs/project-status.json"
+  },
+  "tagRule": {
+    "prefix": "sgg",
+    "format": "sgg-01, sgg-02, sgg-03 ...",
+    "currentSequence": 1,
+    "currentTag": "sgg-01",
+    "nextTag": "sgg-02",
+    "notes": "全项目统一使用短标签，尾部数字按顺序递增，方便记忆、查找和回滚。"
+  },
+  "current": {
+    "title": "Cocos 骨架与日志系统初始化",
+    "status": "可使用",
+    "gitTag": "sgg-01",
+    "gitCommit": "以当前标签为准",
+    "updatedAt": "2026-03-17",
+    "summary": "日志看板正式版已就绪，当前支持 JSON 真相源、Markdown/HTML 联动、静态站点导出和 GitHub Pages 自动部署配置。"
+  },
+  "modules": [
+    {
+      "id": "log-system",
+      "name": "日志系统",
+      "status": "已完成",
+      "note": "采用 JSON 单一真相源，同时生成 Markdown、HTML 和静态站点导出。"
+    },
+    {
+      "id": "cocos-skeleton",
+      "name": "Cocos 项目骨架",
+      "status": "已完成",
+      "note": "数据层、核心层、首页/图鉴/商城/装备/战斗控制器骨架已建立。"
+    },
+    {
+      "id": "home-ux",
+      "name": "首页 UI/UX 重做",
+      "status": "待开始",
+      "note": "将按手机小游戏方式重新搭首页和战前分层。"
+    },
+    {
+      "id": "battle-rebuild",
+      "name": "战斗系统重构",
+      "status": "待开始",
+      "note": "后续按竖屏自动射击与模块技能流派重新实现。"
+    }
+  ],
+  "history": [
+    {
+      "sequence": 1,
+      "tag": "sgg-01",
+      "date": "2026-03-17",
+      "title": "Cocos 骨架与日志系统初始化",
+      "commit": "以当前标签为准",
+      "rollbackReady": true,
+      "summary": [
+        "建立 Cocos 项目蓝图文档。",
+        "拆出关卡、美女、装备和首页壳层数据。",
+        "建立首页、图鉴、商城、装备、战斗控制器骨架。",
+        "建立日志系统的 JSON 真相源、Markdown 日志、HTML 看板和静态站点导出方案。"
+      ]
+    }
+  ],
+  "nextSteps": [
+    "接入远程仓库并启用 GitHub Pages 自动部署。",
+    "创建 HomeScene 并搭建首页第一版可视化布局。",
+    "把版本标签与回滚流程接入后续日常开发节奏。"
+  ],
+  "usageNotes": [
+    "开发者以 docs/project-status.json 为唯一真实记录来源。",
+    "DEVLOG.md 给开发和版本回滚查看。",
+    "PROJECT-DASHBOARD.html 给非技术伙伴快速查看。",
+    "真正回滚时，由使用者告诉 Codex 标签名，再由 Codex 执行回滚。"
+  ]
+}

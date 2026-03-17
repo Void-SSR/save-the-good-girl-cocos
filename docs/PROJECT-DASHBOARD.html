@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>拯救美少女 · 项目看板</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6fb;
+      --panel: #ffffff;
+      --text: #1e2430;
+      --muted: #5d6778;
+      --line: #dbe2ef;
+      --accent: #4a72ff;
+      --accent-soft: rgba(74, 114, 255, 0.12);
+      --shadow: 0 18px 40px rgba(31, 45, 78, 0.08);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+      background: linear-gradient(180deg, #eef3ff 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 32px;
+      line-height: 1.15;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .meta-grid,
+    .two-grid,
+    .module-grid,
+    .history-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .meta-grid {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      margin-top: 20px;
+    }
+
+    .two-grid {
+      grid-template-columns: 1.15fr 0.85fr;
+      margin-bottom: 22px;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .module-grid,
+    .history-grid {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      margin-bottom: 22px;
+    }
+
+    .panel,
+    .module-card,
+    .history-card,
+    .meta-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .support-panel {
+      padding: 20px;
+      background: linear-gradient(180deg, rgba(255, 244, 219, 0.92) 0%, rgba(255, 238, 208, 0.92) 100%);
+      border: 1px dashed #e4bc6f;
+      box-shadow: 0 12px 26px rgba(157, 110, 14, 0.08);
+    }
+
+    .support-panel h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .support-panel h2::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: #d3912a;
+      box-shadow: 0 0 0 6px rgba(211, 145, 42, 0.16);
+    }
+
+    .panel h2,
+    .history-card h3,
+    .module-card h3 {
+      margin: 0 0 10px;
+    }
+
+    .panel p,
+    .module-card p,
+    .history-card p,
+    .panel li,
+    .history-card li {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .meta-card {
+      padding: 18px 16px;
+    }
+
+    .meta-card .label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .meta-card strong {
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .module-card,
+    .history-card {
+      padding: 20px;
+    }
+
+    .module-head,
+    .history-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 74px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .history-card ul,
+    .panel ul,
+    .panel ol {
+      padding-left: 18px;
+      margin: 10px 0 0;
+    }
+
+    .meta {
+      margin-top: 0;
+      font-size: 14px;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 860px) {
+      .two-grid,
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 22px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>拯救美少女 · 项目看板</h1>
+      <p>日志看板正式版已就绪，当前支持 JSON 真相源、Markdown/HTML 联动、静态站点导出和 GitHub Pages 自动部署配置。</p>
+      <div class="meta-grid">
+        <article class="meta-card">
+          <span class="label">当前阶段</span>
+          <strong>Cocos 骨架与日志系统初始化</strong>
+        </article>
+        <article class="meta-card">
+          <span class="label">当前 Git 标签</span>
+          <strong>sgg-01</strong>
+        </article>
+        <article class="meta-card">
+          <span class="label">当前提交</span>
+          <strong>以当前标签为准</strong>
+        </article>
+        <article class="meta-card">
+          <span class="label">最近更新</span>
+          <strong>2026-03-17</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>模块进度</h2>
+      <div class="module-grid">
+        <article class="module-card">
+          <div class="module-head">
+            <h3>日志系统</h3>
+            <span class="status-chip">已完成</span>
+          </div>
+          <p>采用 JSON 单一真相源，同时生成 Markdown、HTML 和静态站点导出。</p>
+        </article>
+      
+        <article class="module-card">
+          <div class="module-head">
+            <h3>Cocos 项目骨架</h3>
+            <span class="status-chip">已完成</span>
+          </div>
+          <p>数据层、核心层、首页/图鉴/商城/装备/战斗控制器骨架已建立。</p>
+        </article>
+      
+        <article class="module-card">
+          <div class="module-head">
+            <h3>首页 UI/UX 重做</h3>
+            <span class="status-chip">待开始</span>
+          </div>
+          <p>将按手机小游戏方式重新搭首页和战前分层。</p>
+        </article>
+      
+        <article class="module-card">
+          <div class="module-head">
+            <h3>战斗系统重构</h3>
+            <span class="status-chip">待开始</span>
+          </div>
+          <p>后续按竖屏自动射击与模块技能流派重新实现。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>版本记录</h2>
+      <div class="history-grid">
+        <article class="history-card">
+          <div class="history-head">
+            <strong>sgg-01</strong>
+            <span>2026-03-17</span>
+          </div>
+          <h3>Cocos 骨架与日志系统初始化</h3>
+          <p class="meta">提交：以当前标签为准 | 可回滚：是</p>
+          <ul>
+            <li>建立 Cocos 项目蓝图文档。</li><li>拆出关卡、美女、装备和首页壳层数据。</li><li>建立首页、图鉴、商城、装备、战斗控制器骨架。</li><li>建立日志系统的 JSON 真相源、Markdown 日志、HTML 看板和静态站点导出方案。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="two-grid">
+      <article class="panel">
+        <h2>下一步</h2>
+        <ol><li>接入远程仓库并启用 GitHub Pages 自动部署。</li><li>创建 HomeScene 并搭建首页第一版可视化布局。</li><li>把版本标签与回滚流程接入后续日常开发节奏。</li></ol>
+      </article>
+      <article class="panel">
+        <h2>回滚提醒</h2>
+        <p>回滚时不要直接点按钮操作。请把标签名告诉 Codex，例如：<strong>回滚到 sgg-01</strong>。</p>
+        <p class="meta">真正回滚仍以 Git 提交和标签为准。</p>
+      </article>
+    </section>
+
+    <section class="support-grid">
+      <article class="panel support-panel">
+        <h2>Git 标签规则</h2>
+        <ul>
+          <li>前缀：sgg</li>
+          <li>格式：sgg-01, sgg-02, sgg-03 ...</li>
+          <li>当前标签：sgg-01</li>
+          <li>下一个标签：sgg-02</li>
+          <li>全项目统一使用短标签，尾部数字按顺序递增，方便记忆、查找和回滚。</li>
+        </ul>
+      </article>
+      <article class="panel support-panel">
+        <h2>使用方式</h2>
+        <ul><li>开发者以 docs/project-status.json 为唯一真实记录来源。</li><li>DEVLOG.md 给开发和版本回滚查看。</li><li>PROJECT-DASHBOARD.html 给非技术伙伴快速查看。</li><li>真正回滚时，由使用者告诉 Codex 标签名，再由 Codex 执行回滚。</li></ul>
+      </article>
+    </section>
+
+    <p class="footer-note">本页面由 docs/project-status.json 自动生成。</p>
+  </main>
+</body>
+</html>

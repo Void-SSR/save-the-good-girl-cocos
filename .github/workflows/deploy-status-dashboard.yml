@@ -1,0 +1,63 @@
+name: Deploy Status Dashboard
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - docs/project-status.json
+      - scripts/render-project-status.mjs
+      - scripts/export-status-site.mjs
+      - scripts/test-status-workflow.mjs
+      - package.json
+      - .github/workflows/deploy-status-dashboard.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: status-dashboard-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Test status workflow
+        run: npm run test:status
+
+      - name: Render dashboard files
+        run: npm run render:status
+
+      - name: Export static status site
+        run: npm run export:status
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .generated/status-site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
