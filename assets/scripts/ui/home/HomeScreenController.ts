@@ -6,7 +6,9 @@ import {
   Graphics,
   Label,
   Layout,
+  Mask,
   Node,
+  ScrollView,
   UITransform,
   Widget,
   view
@@ -256,20 +258,45 @@ export class HomeScreenController extends Component {
 
     this.buildBackground(shell, shellWidth, shellHeight);
 
+    const viewportHeight = shellHeight - 28 - (bottomNavHeight + 18);
+    const scrollArea = new Node("ScrollArea");
+    shell.addChild(scrollArea);
+    this.setSize(scrollArea, contentWidth, viewportHeight);
+    this.fitFullScreen(scrollArea, sidePadding, sidePadding, 28, bottomNavHeight + 18);
+    scrollArea.addComponent(Mask);
+
+    const scrollView = scrollArea.addComponent(ScrollView);
+    scrollView.horizontal = false;
+    scrollView.vertical = true;
+    scrollView.inertia = true;
+    scrollView.elastic = true;
+    scrollView.brake = 0.55;
+    scrollView.bounceDuration = 0.2;
+
     const content = new Node("Content");
-    shell.addChild(content);
-    this.fitFullScreen(content, sidePadding, sidePadding, 28, bottomNavHeight + 18);
+    scrollArea.addChild(content);
+    this.setSize(content, contentWidth, viewportHeight);
+    this.setAnchor(content, 0.5, 1);
+    content.setPosition(0, viewportHeight * 0.5 - 4);
 
     const contentLayout = content.addComponent(Layout);
     contentLayout.type = Layout.Type.VERTICAL;
     contentLayout.spacingY = 14;
-    contentLayout.resizeMode = Layout.ResizeMode.NONE;
+    contentLayout.paddingTop = 4;
+    contentLayout.paddingBottom = 56;
+    contentLayout.resizeMode = Layout.ResizeMode.CONTAINER;
 
     const topMetrics = this.createMetricRow(content, contentWidth);
     const heroPanel = this.createHeroPanel(content, contentWidth);
     const chapterPanel = this.createChapterPanel(content, contentWidth);
-    const quickEntryPanel = this.createQuickEntryPanel(content, contentWidth, this.getQuickEntries());
+    this.createQuickEntryPanel(content, contentWidth, this.getQuickEntries());
     const supportPanel = this.createSupportRow(content, contentWidth);
+    contentLayout.updateLayout();
+    const contentTransform = content.getComponent(UITransform);
+    if (contentTransform && contentTransform.height < viewportHeight) {
+      contentTransform.setContentSize(contentTransform.width, viewportHeight);
+    }
+    scrollView.content = content;
 
     this.runtimeBindings.metricValueLabels = topMetrics;
     this.runtimeBindings.heroNameLabel = heroPanel.heroNameLabel;
@@ -367,7 +394,7 @@ export class HomeScreenController extends Component {
   }
 
   private createHeroPanel(parent: Node, width: number) {
-    const hero = this.createCard(parent, "HeroPanel", width, 176, PALETTE.panel, PALETTE.border, 30);
+    const hero = this.createCard(parent, "HeroPanel", width, 168, PALETTE.panel, PALETTE.border, 30);
     const blueprint = GameDatabase.homeShell;
 
     const badge = this.createBadge(hero.card, "净化指挥官", 18, 136, 34, 26, "#22366a", "#3b5dba");
@@ -378,24 +405,26 @@ export class HomeScreenController extends Component {
     this.placeNode(avatar, 132, 132, -width * 0.5 + 92, -6);
     this.drawPortraitToken(avatar);
 
-    const heroNameLabel = this.createText(hero.card, blueprint.heroName, 34, PALETTE.text, 240, true);
+    const textWidth = Math.max(216, width * 0.5 - 264);
+
+    const heroNameLabel = this.createText(hero.card, blueprint.heroName, 34, PALETTE.text, textWidth, true);
     this.setAnchor(heroNameLabel.node, 0, 0.5);
-    heroNameLabel.node.setPosition(-8, 22);
+    heroNameLabel.node.setPosition(-14, 26);
 
-    const heroSloganLabel = this.createText(hero.card, blueprint.heroSlogan, 16, PALETTE.muted, width - 230);
+    const heroSloganLabel = this.createText(hero.card, blueprint.heroSlogan, 16, PALETTE.muted, textWidth);
     this.setAnchor(heroSloganLabel.node, 0, 0.5);
-    heroSloganLabel.node.setPosition(-8, -14);
+    heroSloganLabel.node.setPosition(-14, -6);
 
-    const actionTitleLabel = this.createText(hero.card, blueprint.dominantActionTitle, 22, PALETTE.text, width - 250, true);
+    const actionTitleLabel = this.createText(hero.card, blueprint.dominantActionTitle, 22, PALETTE.text, textWidth, true);
     this.setAnchor(actionTitleLabel.node, 0, 0.5);
-    actionTitleLabel.node.setPosition(-8, -56);
+    actionTitleLabel.node.setPosition(-14, -48);
 
-    const actionSubtitleLabel = this.createText(hero.card, blueprint.dominantActionSubtitle, 14, PALETTE.muted, width - 250);
+    const actionSubtitleLabel = this.createText(hero.card, blueprint.dominantActionSubtitle, 14, PALETTE.muted, textWidth);
     this.setAnchor(actionSubtitleLabel.node, 0, 0.5);
-    actionSubtitleLabel.node.setPosition(-8, -82);
+    actionSubtitleLabel.node.setPosition(-14, -74);
 
-    const actionButton = this.createBadge(hero.card, blueprint.dominantActionButton, 16, 136, 40, 20, "#2c5fff", "#74b7ff");
-    actionButton.node.setPosition(width * 0.5 - 92, -58);
+    const actionButton = this.createBadge(hero.card, blueprint.dominantActionButton, 16, 138, 40, 20, "#2c5fff", "#74b7ff");
+    actionButton.node.setPosition(width * 0.5 - 92, -12);
     const actionButtonLabel = actionButton.label;
 
     return {
@@ -408,32 +437,32 @@ export class HomeScreenController extends Component {
   }
 
   private createChapterPanel(parent: Node, width: number) {
-    const panel = this.createCard(parent, "ChapterPanel", width, 224, PALETTE.panelAlt, PALETTE.border, 28);
+    const panel = this.createCard(parent, "ChapterPanel", width, 212, PALETTE.panelAlt, PALETTE.border, 28);
     const blueprint = GameDatabase.homeShell;
 
     const eyebrow = this.createText(panel.card, blueprint.chapterPanelEyebrow, 13, PALETTE.accent, width - 40, true);
     this.setAnchor(eyebrow.node, 0, 0.5);
-    eyebrow.node.setPosition(-width * 0.5 + 26, 80);
+    eyebrow.node.setPosition(-width * 0.5 + 26, 72);
 
     const dangerLabel = this.createText(panel.card, "危险等级：待定", 13, PALETTE.danger, 180, true);
     this.setAnchor(dangerLabel.node, 1, 0.5);
-    dangerLabel.node.setPosition(width * 0.5 - 26, 80);
+    dangerLabel.node.setPosition(width * 0.5 - 26, 72);
 
     const titleLabel = this.createText(panel.card, blueprint.chapterPanelTitle, 26, PALETTE.text, width - 52, true);
     this.setAnchor(titleLabel.node, 0, 0.5);
-    titleLabel.node.setPosition(-width * 0.5 + 26, 46);
+    titleLabel.node.setPosition(-width * 0.5 + 26, 40);
 
     const subtitleLabel = this.createText(panel.card, blueprint.chapterPanelSubtitle, 15, PALETTE.muted, width - 52);
     this.setAnchor(subtitleLabel.node, 0, 0.5);
-    subtitleLabel.node.setPosition(-width * 0.5 + 26, 16);
+    subtitleLabel.node.setPosition(-width * 0.5 + 26, 12);
 
     const previewLabel = this.createText(panel.card, blueprint.dominantActionSubtitle, 16, PALETTE.text, width - 52);
     this.setAnchor(previewLabel.node, 0, 0.5);
-    previewLabel.node.setPosition(-width * 0.5 + 26, -36);
+    previewLabel.node.setPosition(-width * 0.5 + 26, -32);
 
     const tipLabel = this.createText(panel.card, blueprint.chapterPanelSubtitle, 14, PALETTE.muted, width - 52);
     this.setAnchor(tipLabel.node, 0, 0.5);
-    tipLabel.node.setPosition(-width * 0.5 + 26, -88);
+    tipLabel.node.setPosition(-width * 0.5 + 26, -78);
 
     return {
       titleLabel,
@@ -445,20 +474,20 @@ export class HomeScreenController extends Component {
   }
 
   private createQuickEntryPanel(parent: Node, width: number, entries: QuickEntry[]): Node {
-    const panel = this.createCard(parent, "QuickEntryPanel", width, 246, PALETTE.panel, PALETTE.border, 28);
+    const panel = this.createCard(parent, "QuickEntryPanel", width, 232, PALETTE.panel, PALETTE.border, 28);
     const blueprint = GameDatabase.homeShell;
 
     const titleLabel = this.createText(panel.card, blueprint.quickEntryTitle, 24, PALETTE.text, width - 40, true);
     this.setAnchor(titleLabel.node, 0, 0.5);
-    titleLabel.node.setPosition(-width * 0.5 + 24, 94);
+    titleLabel.node.setPosition(-width * 0.5 + 24, 88);
 
     const subtitleLabel = this.createText(panel.card, blueprint.quickEntrySubtitle, 14, PALETTE.muted, width - 40);
     this.setAnchor(subtitleLabel.node, 0, 0.5);
-    subtitleLabel.node.setPosition(-width * 0.5 + 24, 68);
+    subtitleLabel.node.setPosition(-width * 0.5 + 24, 62);
 
     const grid = new Node("QuickEntryGrid");
     panel.card.addChild(grid);
-    this.placeNode(grid, width - 36, 148, 0, -36);
+    this.placeNode(grid, width - 36, 144, 0, -32);
 
     const rowLayout = grid.addComponent(Layout);
     rowLayout.type = Layout.Type.VERTICAL;
