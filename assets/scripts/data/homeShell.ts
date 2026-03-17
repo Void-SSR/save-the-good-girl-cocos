@@ -5,6 +5,28 @@ export const HOME_SHELL_BLUEPRINT = {
   heroSlogan: "美女们，我来拯救你们了！",
   dominantActionTitle: "开始净化行动",
   dominantActionSubtitle: "当前章节会在战前展示恐怖场景和 Boss 预警",
+  dominantActionButton: "进入章节",
+  topBarMetricLabels: {
+    gold: "金币",
+    ticket: "点券",
+    chapter: "章节",
+    power: "战力"
+  },
+  topBarMetricCaptions: {
+    gold: "主线奖励",
+    ticket: "招募资源",
+    chapter: "推进进度",
+    power: "当前配置"
+  },
+  quickEntryTitle: "核心入口",
+  quickEntrySubtitle: "用手机小游戏的习惯分区管理养成、编组和收集内容",
+  formationPanelTitle: "当前编组",
+  formationPanelSubtitle: "切换辅佐、查看当前净化队列",
+  codexPanelTitle: "图鉴进度",
+  codexPanelSubtitle: "已解锁和未解锁角色统一在这里回看",
+  chapterPanelEyebrow: "主线净化",
+  chapterPanelTitle: "当前恐怖章节",
+  chapterPanelSubtitle: "优先推进当前章节，解锁新的 Boss 与净化辅佐",
   topBarMetrics: ["gold", "ticket", "chapter", "power"],
   quickEntries: [
     {

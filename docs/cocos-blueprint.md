@@ -24,6 +24,14 @@ mobile mini-game shooters such as "向僵尸开炮":
 - safe-area friendly bottom actions for thumb interaction
 - codex and collection pages optimized for scrolling, not modal drilling
 
+## Art direction
+
+- all hero, beauty, boss, and chapter visuals move to a commercial-grade anime illustration pipeline
+- mainline and summon beauties should read as adult, high-appeal, mature characters with clear silhouette and polished rendering
+- corrupted boss form and purified form must be treated as separate final artworks, not simple filter swaps
+- runtime assets must stay lightweight through layered export, crop variants, and bundle-based loading
+- detailed execution rules live in `docs/art-production-strategy.md`
+
 ## Scene plan
 
 - `BootScene`

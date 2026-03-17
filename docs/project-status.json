@@ -15,12 +15,12 @@
     "notes": "全项目统一使用短标签，尾部数字按顺序递增，方便记忆、查找和回滚。"
   },
   "current": {
-    "title": "Cocos 骨架与日志系统初始化",
-    "status": "可使用",
+    "title": "HomeScene 首页原型搭建与美术策略制定",
+    "status": "进行中",
     "gitTag": "sgg-01",
     "gitCommit": "以当前标签为准",
     "updatedAt": "2026-03-17",
-    "summary": "日志看板正式版已就绪，当前支持 JSON 真相源、Markdown/HTML 联动、静态站点导出和 GitHub Pages 自动部署配置。"
+    "summary": "日志看板正式版已经投入使用，当前已经输出 HomeScene 接入清单与首批原画资源清单，正在继续推进首页原型壳层和第一批高质量轻量化资源接入。"
   },
   "modules": [
     {
@@ -38,8 +38,14 @@
     {
       "id": "home-ux",
       "name": "首页 UI/UX 重做",
-      "status": "待开始",
-      "note": "将按手机小游戏方式重新搭首页和战前分层。"
+      "status": "进行中",
+      "note": "正在用标准 Cocos 组件搭建手机小游戏式首页原型壳层。"
+    },
+    {
+      "id": "art-pipeline",
+      "name": "美术资源策略",
+      "status": "已完成",
+      "note": "已经明确原画风格、角色魅力标准、运行时压缩策略和分包加载原则。"
     },
     {
       "id": "battle-rebuild",
@@ -65,8 +71,9 @@
     }
   ],
   "nextSteps": [
-    "确认 GitHub Pages 首次自动部署成功并记录公网日志看板地址。",
-    "创建 HomeScene 并搭建首页第一版可视化布局。",
+    "按 home-scene-setup-guide 在 Cocos 编辑器里创建 HomeScene 并挂载首页控制器。",
+    "按 art-batch-001 开始生产主角、绯音净化/黑化、首章场景图和首页通用图标。",
+    "继续细化首页可视化布局与真实交互入口。",
     "把版本标签与回滚流程接入后续日常开发节奏。"
   ],
   "usageNotes": [
