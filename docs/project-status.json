@@ -15,12 +15,12 @@
     "notes": "全项目统一使用短标签，尾部数字按顺序递增，方便记忆、查找和回滚。"
   },
   "current": {
-    "title": "HomeScene 首页原型搭建与美术策略制定",
+    "title": "首页与主线承接页骨架搭建",
     "status": "进行中",
     "gitTag": "sgg-01",
     "gitCommit": "以当前标签为准",
     "updatedAt": "2026-03-17",
-    "summary": "日志看板正式版已经投入使用，HomeScene 已在编辑器中跑起第一版首页原型，当前正在修正滚动与遮挡问题，并同步补齐章节页、编组页的控制器骨架。"
+    "summary": "日志看板正式版已经投入使用，HomeScene 已在编辑器中跑起第一版首页原型，当前已经补齐章节页与出战辅佐页的运行壳层代码，正继续收紧首页滚动与页面承接体验。"
   },
   "modules": [
     {
@@ -40,6 +40,12 @@
       "name": "首页 UI/UX 重做",
       "status": "进行中",
       "note": "HomeScene 已跑起首版首页原型，正在修正滚动视口、底部安全区和主卡按钮排布。"
+    },
+    {
+      "id": "secondary-shells",
+      "name": "章节/编组页骨架",
+      "status": "进行中",
+      "note": "CampaignScene 与 FormationScene 的运行壳层代码已建立，下一步是挂到场景并做真实入口联动。"
     },
     {
       "id": "art-pipeline",
@@ -72,7 +78,7 @@
   ],
   "nextSteps": [
     "重新预览 HomeScene，确认滚动视口、底部安全区和主卡排版已经稳定。",
-    "继续在 Cocos 编辑器里创建 FormationScene 和 CampaignScene，并挂载对应控制器。",
+    "在 Cocos 编辑器里创建 FormationScene 和 CampaignScene，并挂载对应控制器查看运行壳层。",
     "按 art-batch-001 开始生产主角、绯音净化/黑化、首章场景图和首页通用图标。",
     "继续细化首页可视化布局与真实交互入口，再接图鉴页和商城页的可运行界面。",
     "把版本标签与回滚流程接入后续日常开发节奏。"
